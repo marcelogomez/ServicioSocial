@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Capacidad:</strong>
+  <%= @horario.capacidad %>
+</p>
+
+<p>
+  <strong>Proyecto:</strong>
+  <%= link_to @horario.proyecto.nombre, @horario.proyecto %>
+</p>
+
+<p>
+  <%= form_tag(new_dia_hora_path, :method => 'get') do %>
+    <%= hidden_field :get, :horario_id, :value => @horario.id %>
+    <%= submit_tag 'Añadir día y horario' %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_horario_path(@horario) %> |
+<%= link_to 'Back', horarios_path %>

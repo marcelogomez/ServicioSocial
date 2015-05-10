@@ -1,0 +1,113 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @proyecto.nombre %></h1>
+
+<p>
+  <strong>Descripcion:</strong>
+  <%= @proyecto.descripcion %>
+</p>
+
+<p>
+  <strong>Registro inicia:</strong>
+  <%= @proyecto.registro_inicio.strftime '%D/%m/%Y %H:%M' %>
+</p>
+
+<p>
+  <strong>Registro termina:</strong>
+  <%= @proyecto.registro_fin.strftime '%D/%m/%Y %H:%M' %>
+</p>
+
+<p>
+  <strong>Ubicacion:</strong>
+  <%= link_to @proyecto.ubicacion.name, @proyecto.ubicacion %>
+</p>
+
+<p>
+  <strong>Administrador:</strong>
+  <a href="<%= admin_path @proyecto.admin.id %>"><%= "#{@proyecto.admin.nombre} #{@proyecto.admin.apellido}" %></a>
+</p>
+
+<p>
+  <strong>Horas:</strong>
+  <%= @proyecto.horas %>
+</p>
+
+
+<p>
+  <strong>Carreras:</strong>
+  <% @proyecto.carreras.all.order(:iniciales).each do |carrera|
+  %>
+    <%= "#{carrera.iniciales}" %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Semestres: </strong>
+  <% "#{@proyecto.semestre_minimo} - #{@proyecto.semestre_max}" %>
+</p>
+
+<p>
+  <strong>Requisitos adicionales:</strong>
+  <%= @proyecto.requisitos %>
+</p>
+
+<p><strong>Horarios</strong></p>
+<% if @is_admin %>
+    <%= form_tag(new_horario_path, :method => 'get') do %>
+        <%= hidden_field :get, :proyecto_id, :value => @proyecto.id %>
+        <%= submit_tag 'Añadir horario' %>
+    <% end %>
+<% end %>
+<% if @proyecto.horarios.size > 0 %>
+    <div>
+        <table>
+            <% @proyecto.horarios.each do |horario| %>
+                <tr>
+                  <td>
+                    <% horario.dia_horas.each do |dia_hora| %>
+                        <%= "#{dia_hora.to_s}\n" %>
+                    <% end %>
+                  </td>
+                  <% unless @is_admin %>
+                    <td>
+                        <% if Usuario.find(session[:usuario]['id']).is_assigned_to_horario horario %>
+                            <%= form_tag({:controller => 'proyectos', :action => 'remove_user_from_wait_list'}, :method => 'post') do %>
+                                <%= hidden_field :post, 'usuario_id', :value => session[:usuario]['id'] %>
+                                <%= hidden_field :post, 'horario_id', :value => horario.id %>
+                                <%= submit_tag 'Salir del horario' %>
+                            <% end %>
+                        <% else %>
+                            <% if @proyecto.registro_inicio <= Time.now and @proyecto.registro_fin >= Time.now %>
+                                <%= form_tag({:controller => 'proyectos', :action => 'add_user_to_wait_list'}, :method => 'post') do %>
+                                    <%= hidden_field :post, 'usuario_id', :value => session[:usuario]['id'] %>
+                                    <%= hidden_field :post, 'horario_id', :value => horario.id %>
+                                    <%= submit_tag 'Registrarse al horario' %>
+                                <% end %>
+                            <% else %>
+                                <b><%= 'Registro no disponible' %></b>
+                            <% end %>
+                        <% end %>
+                    </td>
+                  <% end %>
+                  <% if @is_admin %>
+                    <td>
+                      <%= form_tag(new_dia_hora_path, :method => 'get') do %>
+                          <%= hidden_field :get, :horario_id, :value => horario.id %>
+                          <%= submit_tag 'Añadir día y hora' %>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+    <% if @is_admin %>
+        <%= form_tag({:controller => 'proyectos', :action => 'get_lista_espera_for_proyecto'}, :method => 'post') do %>
+            <%= hidden_field :post, :proyecto_id, :value => @proyecto.id %>
+            <%= submit_tag 'Ver lista de espera' %>
+        <% end %>
+    <% end %>
+<% end %>
+<% if session[:admin] %>
+    <%= link_to 'Editar proyecto', edit_proyecto_path(@proyecto) %>
+<% end %>
+<%= link_to 'Regresar a proyectos', proyectos_path %>

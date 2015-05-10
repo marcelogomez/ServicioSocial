@@ -1,0 +1,55 @@
+<%= form_for(@usuario) do |f| %>
+  <% if @usuario.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@usuario.errors.count, "error") %> prohibited this usuario from being saved:</h2>
+
+      <ul>
+      <% @usuario.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :matricula %><br>
+    <%= f.text_field :matricula %>
+
+  <div class="field">
+    <%= f.label 'Contraseña (de correo institucional)' %><br>
+    <%= password_field_tag :password %>
+  </div>
+
+  </div>
+  <div class="field">
+    <%= f.label :nombre %><br>
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="field">
+    <%= f.label :apellido %><br>
+    <%= f.text_field :apellido %>
+  </div>
+  <div class="field">
+    <%= f.label :carrera_id %><br>
+    <%= f.select :carrera_id, options_from_collection_for_select(Carrera.all.order(:iniciales), :id, :iniciales)  %>
+  </div>
+  <div class="field">
+    <%= f.label :semestre %><br>
+    <%= f.number_field :semestre %>
+  </div>
+  <div class="field">
+    <%= f.label :telefono %><br>
+    <%= f.text_field :telefono %>
+  </div>
+  <div class="field">
+    <%= f.label :correo %><br>
+    <%= f.text_field :correo %>
+  </div>
+  <div class="field">
+    <%= f.label :facebook %><br>
+    <%= f.text_field :facebook %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

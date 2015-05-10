@@ -1,0 +1,19 @@
+<html>
+<head>
+      <title>Iniciar sesi&oacute;n</title>
+    </head>
+    <% if flash[:notice] %>
+        <h2><%= flash[:notice] %></h2>
+    <% end %>
+    <body>
+        <%= form_for :login, :url => {:action => 'do_admin_login'}, method: :post  do |f| %>
+            <%= f.label 'Matrícula' %>
+            <%= f.text_field :user_name %>
+            <br>
+            <%= f.label 'Contraseña' %>
+            <%= password_field_tag :password %>
+            <br>
+            <%= f.submit 'Iniciar sesión' %>
+        <% end %>
+    </body>
+</html>

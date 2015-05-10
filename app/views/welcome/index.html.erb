@@ -1,0 +1,30 @@
+<html>
+    <head>
+      <title>Servicio Social</title>
+      <% @is_admin = session[:admin] != nil %>
+    </head>
+
+    <body>
+        <% if @is_admin %>
+            <h1>Bienvenido(a) <%= "#{session[:admin]['nombre']} #{session[:admin]['apellido']}" %></h1>
+        <% else %>
+            <h1>Bienvenido(a) <%= "#{session[:usuario]['nombre']} #{session[:usuario]['apellido']}" %></h1>
+        <% end %>
+
+        <ul>
+          <li> <a href="../proyectos">Ver Proyectos</a> </li>
+          <% unless @is_admin %>
+            <li>
+                <%= form_tag({:controller => 'proyectos', :action => 'projects_for_user'}, :method => 'get') do %>
+                  <%= hidden_field :get, 'usuario_id', :value => @is_admin? session[:admin]['id'] : session[:usuario]['id'] %>
+                  <%= submit_tag 'Mis Proyectos' %>
+                <% end  %>
+            </li>
+          <% end %>
+
+          <% if @is_admin %>
+              <li> <a href="<%= admins_path %>">Administrar usuarios</a> </li>
+          <% end %>
+        </ul>
+    </body>
+</html>

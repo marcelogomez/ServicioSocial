@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ubicacions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Iniciales</th>
+      <th>Direccion</th>
+      <th>Descripcion</th>
+      <th>Maps</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ubicacions.each do |ubicacion| %>
+      <tr>
+        <td><%= ubicacion.name %></td>
+        <td><%= ubicacion.iniciales %></td>
+        <td><%= ubicacion.direccion %></td>
+        <td><%= ubicacion.descripcion %></td>
+        <td><%= ubicacion.maps %></td>
+        <td><%= link_to 'Show', ubicacion %></td>
+        <td><%= link_to 'Edit', edit_ubicacion_path(ubicacion) %></td>
+        <td><%= link_to 'Destroy', ubicacion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ubicacion', new_ubicacion_path %>

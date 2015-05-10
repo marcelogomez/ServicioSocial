@@ -1,0 +1,32 @@
+<h1>Lista de espera para <%= @proyecto.nombre %></h1>
+<% @proyecto.horarios.each do |horario| %>
+    <h2>
+      <% horario.dia_horas.each do |dia_hora| %>
+        <%= "#{dia_hora.to_s} " %>
+      <% end %>
+    </h2>
+    <table>
+      <th>Usuario</th>
+      <th>Aprobado</th>
+      <% ListaEsperaProyecto.where(:horario_id => horario.id).each do |asignacion| %>
+        <tr>
+          <td><%= link_to asignacion.usuario.nombre %></td>
+          <td><%= asignacion.aprobada ? 'Sí' : 'No' %></td>
+          <td>
+            <% unless asignacion.aprobada %>
+                <%= form_tag({:controller => 'proyectos', :action => 'approve_asignacion'}, :method => 'post') do %>
+                    <%= hidden_field :post, :asignacion_id, :value => asignacion.id %>
+                    <%= submit_tag 'Aprobar' %>
+                <% end %>
+            <% end %>
+            <% if asignacion.aprobada %>
+                <%= form_tag({:controller => 'proyectos', :action => 'remove_user_from_wait_list'}, :method => 'post') do %>
+                    <%= hidden_field :post, :asignacion_id, :value => asignacion.id %>
+                    <%= submit_tag 'Rechazar' %>
+                <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+<% end %>

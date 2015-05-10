@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ubicacion.name %>
+</p>
+
+<p>
+  <strong>Iniciales:</strong>
+  <%= @ubicacion.iniciales %>
+</p>
+
+<p>
+  <strong>Direccion:</strong>
+  <%= @ubicacion.direccion %>
+</p>
+
+<p>
+  <strong>Descripcion:</strong>
+  <%= @ubicacion.descripcion %>
+</p>
+
+<p>
+  <strong>Maps:</strong>
+  <%= @ubicacion.maps %>
+</p>
+
+<%= link_to 'Edit', edit_ubicacion_path(@ubicacion) %> |
+<%= link_to 'Back', ubicacions_path %>

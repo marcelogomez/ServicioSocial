@@ -1,0 +1,22 @@
+<h1>Mis proyectos</h1>
+<table>
+  <tr>
+      <th>Proyecto</th>
+      <th>Horario</th>
+      <th>Aprobado</th>
+  </tr>
+  <% @asignaciones.each do |a| %>
+      <tr>
+        <td><%= link_to a.horario.proyecto.nombre, a.horario.proyecto %></td>
+        <td>
+          <% a.horario.dia_horas.each do |dia_hora| %>
+            <%=  "#{dia_hora.to_s}\n"  %>
+          <% end %>
+        </td>
+        <td>
+          <!-- Aprobada debe ser un ternary if: en espera, sí, no-->
+          <%= a.aprobada ? 'Sí' : 'No' %>
+        </td>
+      </tr>
+  <% end %>
+</table>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Dia:</strong>
+  <%= ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'][@dia_hora.dia] %>
+</p>
+
+<p>
+  <strong>Hora inicio:</strong>
+  <%= @dia_hora.hora_inicio %>
+</p>
+
+<p>
+  <strong>Hora fin:</strong>
+  <%= @dia_hora.hora_fin %>
+</p>
+
+<%= link_to 'Editar', edit_dia_hora_path(@dia_hora) %> |
+<%= link_to 'Regresar a proyectos', proyectos_path %>

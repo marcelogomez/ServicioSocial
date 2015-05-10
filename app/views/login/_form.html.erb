@@ -1,0 +1,11 @@
+<html>
+    <head>
+      <title>Iniciar sesi&oacute;n</title>
+    </head>
+    <body>
+        <%= form_tag 'welcome/index', :method => 'poar' do %>
+            <%= text_field_tag :user_name %>
+            <%= password_field_tag :password %>
+        <% end %>
+    </body>
+</html>

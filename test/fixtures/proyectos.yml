@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nombre: MyString
+  descripcion: MyString
+  registro_inicio: 2015-04-13 10:13:33
+  registro_fin: 2015-04-13 10:13:33
+  ubicacion_id: 1
+  admin_id: 1
+  horas: 1
+  requisitos: MyString
+
+two:
+  nombre: MyString
+  descripcion: MyString
+  registro_inicio: 2015-04-13 10:13:33
+  registro_fin: 2015-04-13 10:13:33
+  ubicacion_id: 1
+  admin_id: 1
+  horas: 1
+  requisitos: MyString
