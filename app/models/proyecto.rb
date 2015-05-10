@@ -6,4 +6,8 @@ class Proyecto < ActiveRecord::Base
   has_many :carreras, :through => :proyecto_carreras
 
   has_many :horarios
+
+  def self.search(query)
+    where("nombre like ?", "%#{query}%")
+  end
 end

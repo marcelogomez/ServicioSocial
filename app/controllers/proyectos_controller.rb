@@ -2,7 +2,6 @@ class ProyectosController < ApplicationController
   before_action :set_is_admin
   before_action :set_proyecto, only: [:show, :edit, :update, :destroy]
 
-
   def set_is_admin
     @is_admin = session[:admin] != nil
   end
@@ -10,7 +9,11 @@ class ProyectosController < ApplicationController
   # GET /proyectos
   # GET /proyectos.json
   def index
-    @proyectos = Proyecto.all
+    if params[:name_search]
+      @proyectos = Proyecto.search(params[:name_search])
+    else
+      @proyectos = Proyecto.all
+    end
   end
 
   # GET /proyectos/1
