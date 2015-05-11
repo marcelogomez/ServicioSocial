@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 <h1>Lista de espera para <%= @proyecto.nombre %></h1>
 <% @proyecto.horarios.each do |horario| %>
     <h2>
@@ -16,12 +17,14 @@
             <% unless asignacion.aprobada %>
                 <%= form_tag({:controller => 'proyectos', :action => 'approve_asignacion'}, :method => 'post') do %>
                     <%= hidden_field :post, :asignacion_id, :value => asignacion.id %>
+                    <%= hidden_field :post, :proyecto_id, :value => asignacion.horario.proyecto.id %>
                     <%= submit_tag 'Aprobar' %>
                 <% end %>
             <% end %>
             <% if asignacion.aprobada %>
                 <%= form_tag({:controller => 'proyectos', :action => 'remove_user_from_wait_list'}, :method => 'post') do %>
                     <%= hidden_field :post, :asignacion_id, :value => asignacion.id %>
+                    <%= hidden_field :post, :proyecto_id, :value => asignacion.horario.proyecto.id %>
                     <%= submit_tag 'Rechazar' %>
                 <% end %>
             <% end %>

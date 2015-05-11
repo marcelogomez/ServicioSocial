@@ -120,28 +120,36 @@ class ProyectosController < ApplicationController
   def approve_asignacion
     assignment = ListaEsperaProyecto.find params[:post][:asignacion_id]
     assignment.aprobada = true
+    @proyecto = Proyecto.find params[:post][:proyecto_id]
 
     horas_registradas = 0
     assignment.usuario.horarios.each { |horario| horas_registradas += horario.proyecto.horas }
 
     if horas_registradas >= 240
-      redirect_to :back, notice: 'El usuario alcanzó el límite de horas inscritas'
+      flash[:notice] = 'El usuario alcanzó el límite de horas inscritas'
+      render file: 'proyectos/lista_espera'
     elsif ListaEsperaProyecto.where(:horario_id => assignment.horario.id, :aprobada => true).size >= assignment.horario.capacidad
-      redirect_to :back, notice: 'Ya no hay cupos en el proyecto'
+      flash[:notice] = 'Ya no hay cupos en el proyecto'
+      render file: 'proyectos/lista_espera'
     elsif assignment.save
-      redirect_to :back, notice: 'Se aprobó la asignación exitosamente'
+      flash[:notice] = 'Se aprobó la asignación exitosamente'
+      render file: 'proyectos/lista_espera'
     else
-      redirect_to :back, notice: 'Hubo un error al añadir a la lista de espera'
+      flash[:notice] = 'Hubo un error al añadir a la lista de espera'
+      render file: 'proyectos/lista_espera'
     end
   end
 
   def remove_user_from_wait_list
-    assignment = ListaEsperaProyecto.where(:usuario_id => params[:post][:usuario_id], :horario_id => params[:post][:horario_id]).first
+    assignment = ListaEsperaProyecto.find params[:post][:asignacion_id]
     assignment.aprobada = false
-    if assignment.save
-      redirect_to :back, notice: 'Se quitó del proyecto exitosamente'
+    @proyecto = Proyecto.find params[:post][:proyecto_id]
+    if assignment.delete
+      flash[:notice] = 'Se quitó del proyecto exitosamente'
+      render file: 'proyectos/lista_espera'
     else
-      redirect_to :back, notice: 'Hubo un error al quitarte de la lista de espera'
+      flash[:notice] = 'Hubo un error al quitarte de la lista de espera'
+      render file: 'proyectos/lista_espera'
     end
   end
 
