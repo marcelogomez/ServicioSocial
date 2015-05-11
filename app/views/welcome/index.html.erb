@@ -3,15 +3,17 @@
       <title>Servicio Social</title>
       <% @is_admin = session[:admin] != nil %>
     </head>
-
     <body>
+    <div id="containerWelcome">
         <% if @is_admin %>
-            <h1>Bienvenido(a) <%= "#{session[:admin]['nombre']} #{session[:admin]['apellido']}" %></h1>
+            <h2>Bienvenido(a) <%= "#{session[:admin]['nombre']} #{session[:admin]['apellido']}" %></h2>
         <% else %>
-            <h1>Bienvenido(a) <%= "#{session[:usuario]['nombre']} #{session[:usuario]['apellido']}" %></h1>
+            <h2>Bienvenido(a) <%= "#{session[:usuario]['nombre']} #{session[:usuario]['apellido']}" %></h2>
         <% end %>
 
-        <ul>
+        <h4>Por favor selecciona una opci&oacute;n:</h4>
+
+        <ul class="list-inline">
           <li> <a href="../proyectos">Ver Proyectos</a> </li>
           <% unless @is_admin %>
             <li>
@@ -26,5 +28,6 @@
               <li> <a href="<%= admins_path %>">Administrar usuarios</a> </li>
           <% end %>
         </ul>
+    </div>
     </body>
 </html>

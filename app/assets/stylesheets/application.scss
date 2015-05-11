@@ -9,7 +9,31 @@
  * compiled file so the styles you add here take precedence over styles defined in any styles
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
- *
- *= require_tree .
- *= require_self
  */
+ // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+#containerLogin{
+  width: 50%;
+  margin: auto;
+}
+
+#container{
+   width: 90%;
+   margin: auto;
+ }
+
+#containerWelcome{
+  width: 50%;
+  margin: auto;
+  margin-top: 10%;
+  text-align: center;
+}
+
+#loginLogo{
+  width: 30%;
+  height: auto;
+  margin-left: 35%;
+  margin-top: 10%;
+}
